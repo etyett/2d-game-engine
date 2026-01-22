@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <iostream>
 
 #undef main
 
@@ -6,9 +7,21 @@ int main() {
     SDL_Init(SDL_INIT_VIDEO);
     if((SDL_Init(SDL_INIT_VIDEO)) != 0) {
         std::cout << "sdl init error: " << SDL_GetError() << std::endl;
+    return 1;
     }
     SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+    if(!window) {
+        std::cout << "window init error: " << std::endl;
+    SDL_Quit();
+    return 1;
+    }
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if(!renderer) {
+        std::cout << "renderer init error: " << std::endl;
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 1;
+    }
     SDL_Event event;
     const Uint8* key = SDL_GetKeyboardState(NULL);
     bool run = true;
