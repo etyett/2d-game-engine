@@ -4,6 +4,9 @@
 
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
+    if((SDL_Init(SDL_INIT_VIDEO)) <= 0) {
+        std::cout << "sdl init error: " << SDL_GetError() << std::endl;
+    }
     SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Event event;
